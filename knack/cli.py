@@ -39,7 +39,8 @@ class CLI(object):  # pylint: disable=too-many-instance-attributes
                  query_cls=CLIQuery,
                  parser_cls=CLICommandParser,
                  commands_loader_cls=CLICommandsLoader,
-                 help_cls=CLIHelp):
+                 help_cls=CLIHelp,
+                 use_local_config=False):
         """
         :param cli_name: The name of the CLI (e.g. the executable name 'az')
         :type cli_name: str
@@ -82,7 +83,8 @@ class CLI(object):  # pylint: disable=too-many-instance-attributes
         # Data that's typically backed to persistent storage
         self.config = config_cls(
             config_dir=config_dir or os.path.join('~', '.{}'.format(cli_name)),
-            config_env_var_prefix=config_env_var_prefix or cli_name.upper()
+            config_env_var_prefix=config_env_var_prefix or cli_name.upper(),
+            use_local_config = use_local_config
         )
         # In memory collection of key-value data for this current cli. This persists between invocations.
         self.data = defaultdict(lambda: None)
